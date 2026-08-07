@@ -1,6 +1,7 @@
 ---
 name: agents-md-benchmark
 description: "Design and run reproducible before/after experiments that measure whether AGENTS.md changes coding-agent behavior in a repository. Use when the user asks to benchmark AGENTS.md, test agent instructions, compare behavior with and without repo guidance, improve AGENTS.md from observed mistakes, or produce an AAIF-ready contribution around AGENTS.md measurement. NOT for: benchmarking model quality generally, publishing private repository data, running destructive experiments, or replacing CI/security enforcement."
+license: MIT
 ---
 
 # AGENTS.md Benchmark
@@ -263,4 +264,3 @@ Recommend more trials when:
 - The result depends on an ambiguous interpretation.
 
 Never claim enforcement. `AGENTS.md` is guidance. CI, tests, branch protection, and sandboxing enforce.
-

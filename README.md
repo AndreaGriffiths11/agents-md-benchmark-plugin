@@ -1,8 +1,8 @@
-# AGENTS.md Benchmark Skill
+# AGENTS.md Benchmark Plugin
 
-Private working repository for the AGENTS.md Benchmark skill.
+Private working repository for the AGENTS.md Benchmark Agent Plugin.
 
-This repository contains the publishable skill instructions, templates, and sanitized examples for measuring whether `AGENTS.md` changes coding-agent behavior in a repository.
+This repository contains a portable Agent Plugins package for measuring whether `AGENTS.md` changes coding-agent behavior in a repository.
 
 ## Privacy boundary
 
@@ -20,16 +20,16 @@ Use generic labels such as `sample-web-app`, `baseline`, `treatment`, `protected
 
 ## Contents
 
-- `skill.md` - publishable Main Branch skill file.
-- `templates/AGENTS.template.md` - starter AGENTS.md for benchmark treatment runs.
-- `templates/benchmark-prompts.md` - reusable benchmark prompt patterns.
-- `templates/report-template.md` - private/internal benchmark report template.
-- `examples/sanitized-summary.md` - safe example summary based on generic experiment patterns.
+- `plugin.json` - Agent Plugins manifest.
+- `skills/agents-md-benchmark/SKILL.md` - portable Agent Skill instructions.
+- `skills/agents-md-benchmark/references/AGENTS.template.md` - starter AGENTS.md for benchmark treatment runs.
+- `skills/agents-md-benchmark/references/benchmark-prompts.md` - reusable benchmark prompt patterns.
+- `skills/agents-md-benchmark/references/report-template.md` - private/internal benchmark report template.
+- `skills/agents-md-benchmark/references/sanitized-summary.md` - safe example summary based on generic experiment patterns.
 
 ## Distribution plan
 
 1. Keep this repository private while the skill is refined.
 2. Use sanitized examples only.
-3. After review, copy or adapt `skill.md` into the public skills directory.
-4. Publish templates only if they contain no repo-specific details.
-
+3. After review, publish the Agent Plugin package or copy `skills/agents-md-benchmark/SKILL.md` into the public skills directory.
+4. Publish references only if they contain no repo-specific details.
