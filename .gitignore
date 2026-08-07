@@ -1,0 +1,11 @@
+.DS_Store
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+*.log
+raw-artifacts/
+private-artifacts/
+experiment-runs/
+
