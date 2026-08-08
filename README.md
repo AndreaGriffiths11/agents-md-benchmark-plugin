@@ -83,15 +83,13 @@ Before anything from an experiment lands in this repository or a public skills c
 
 Use generic labels such as `sample-web-app`, `baseline`, `treatment`, `protected config`, and `generated output`.
 
-## Distribution path
+## Next steps
 
-This repository is the portable Agent Plugins package. A public catalog entry can later mirror or link to:
+This repository is where the skill is developed first.
 
-```text
-skills/agents-md-benchmark/SKILL.md
-```
+When the skill is ready to share more broadly, add it to `mainbranch.dev/skills/` as a public skill page. That page can summarize the skill and point back to this plugin repo once the repo is ready to be public.
 
-Keep the plugin package as the source of truth, then adapt the skill page for any specific catalog format.
+Keep private benchmark artifacts out of both places. Only publish sanitized examples, templates, and documentation.
 
 ## License
 
