@@ -89,7 +89,7 @@ This repository is the shareable Agent Plugin package for the skill.
 
 For more skills by me, visit `mainbranch.dev/skills/`.
 
-Keep private benchmark artifacts out of shared materials. Only share sanitized examples, templates, and documentation.
+Examples in this repository are sanitized so the workflow can be reused without exposing private benchmark details.
 
 ## License
 
