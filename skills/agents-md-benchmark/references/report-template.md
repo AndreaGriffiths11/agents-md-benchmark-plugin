@@ -17,10 +17,10 @@
 
 ## Result summary
 
-| Condition | Files changed | Diff size | Commands run | Validation | Protected files touched | Scope notes |
-|---|---:|---:|---|---|---|---|
-| Baseline | `<n>` | `<size>` | `<commands>` | `<result>` | `<yes/no>` | `<notes>` |
-| Treatment | `<n>` | `<size>` | `<commands>` | `<result>` | `<yes/no>` | `<notes>` |
+| Condition | Changed files including untracked | Diff size | Commands run | Validation | Protected files touched | Generated/ignored files touched | Scope notes |
+|---|---:|---:|---|---|---|---|---|
+| Baseline | `<n>` | `<size>` | `<commands>` | `<result>` | `<yes/no>` | `<yes/no>` | `<notes>` |
+| Treatment | `<n>` | `<size>` | `<commands>` | `<result>` | `<yes/no>` | `<yes/no>` | `<notes>` |
 
 ## Expected files
 
@@ -31,6 +31,21 @@
 
 - `<protected-file-or-pattern>`
 - `<protected-file-or-pattern>`
+
+## Changed files
+
+List both tracked and untracked files. Suggested commands:
+
+```bash
+git diff --name-only
+git ls-files --others --exclude-standard
+git diff --stat
+git diff --numstat
+```
+
+## Validation notes
+
+If a validation command could not run because tooling was unavailable, record it as an environment limitation rather than a code failure. Include any fallback checks such as `git diff --check`.
 
 ## Findings
 
@@ -55,4 +70,3 @@
 - [ ] No copied private source code.
 - [ ] No secrets or tokens.
 - [ ] No customer, employee, email, chat, calendar, or domain details.
-

@@ -12,37 +12,13 @@ The goal is not to prove `AGENTS.md` always helps. The goal is to run controlled
 
 ## Critical first steps
 
-Before running any benchmark:
+1. Confirm the target repository and benchmark scope.
+2. Confirm whether results are private, public, or intended for a sanitized public summary.
+3. Check whether the target worktree is clean or intentionally dirty.
+4. Keep experiment copies local unless the user explicitly asks to publish or share them.
+5. Do not commit, push, open PRs, or share benchmark artifacts unless explicitly requested.
 
-1. Confirm the target repository.
-2. Confirm the privacy level of the repository and results.
-3. Check whether the worktree is clean or intentionally dirty.
-4. Keep experiment copies local unless the user explicitly asks to publish.
-5. Do not commit, push, open PRs, or share artifacts without explicit user approval.
-
-If the repository is private or contains sensitive code, keep raw outputs private and produce only sanitized summaries for external sharing.
-
-## Privacy rules
-
-Never put private repository details into public artifacts.
-
-Do not publish:
-
-- Private repository names, owners, domains, paths, or organization names.
-- Raw diffs from private repositories.
-- Source code copied from private repositories.
-- Agent transcripts that include private code or paths.
-- Secrets, tokens, credentials, logs, emails, chats, calendar data, or customer data.
-- Local filesystem paths.
-
-For public examples, use generic names:
-
-- `sample-web-app`
-- `baseline`
-- `treatment`
-- `generated output`
-- `protected config`
-- `agent-visible instructions`
+If the repository is private or sensitive, keep raw outputs local and produce only sanitized summaries for external sharing.
 
 ## Core workflow
 
@@ -52,104 +28,79 @@ Identify:
 
 - Package manager and lockfiles.
 - Build, lint, test, typecheck, and preview commands.
-- Existing guidance files: `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`, `CONTRIBUTING.md`, README files, or agent prompts.
-- Generated files and build output.
+- Existing guidance files such as `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`, `CONTRIBUTING.md`, and README files.
+- Generated output, ignored paths, caches, and build artifacts.
 - Protected files such as deployment workflows, domain config, environment config, generated clients, lockfiles, and infrastructure files.
-- Places where agents might wander: routing, search, RSS/feed generation, global layout, shared services, generated data, or config.
+- Surfaces where agents might wander, such as routing, search, feeds, global layout, shared services, generated data, or config.
 
-### 2. Draft a short AGENTS.md candidate
+### 2. Draft a short candidate AGENTS.md
 
-Keep it concrete and operational.
+Use `references/AGENTS.template.md` as the starting point. Keep the file concrete and operational.
 
-Include:
+Include package manager, validation commands, generated-file boundaries, protected files, scope-control guidance, key project patterns, and multi-file surfaces that must stay consistent.
 
-- Package manager and install command.
-- Validation commands.
-- Generated-file boundaries.
-- Protected files.
-- Scope control instruction.
-- Key project patterns.
-- Any multi-file surfaces that must stay consistent.
-
-Avoid:
-
-- Long policy documents.
-- Vague guidance like "follow best practices."
-- Duplicating the README.
-- Instructions that pretend to enforce security. CI and branch protection enforce; `AGENTS.md` guides.
+Avoid long policy documents, vague guidance like "follow best practices", duplicating the README, or language that pretends to enforce security. `AGENTS.md` guides; CI, tests, branch protection, and sandboxing enforce.
 
 ### 3. Design benchmark tasks
 
-Use at least three task shapes:
+Use `references/benchmark-prompts.md` for task patterns.
 
-| Task type | Purpose | Good signal |
+Prefer at least three task shapes:
+
+| Task type | Purpose | Expected signal |
 |---|---|---|
-| Simple scoped task | Confirms baseline competence | Usually neutral |
-| Multi-file task | Tests convention discovery | May show smaller diffs or fewer missed files |
+| Simple scoped task | Confirms baseline competence | Often neutral |
+| Multi-file task | Tests convention discovery | Missed files, smaller diffs, or fewer unnecessary edits |
 | Messy cross-surface task | Tests scope control | Best chance to reveal AGENTS.md value |
 
 Messy tasks should be realistic and safe. They should tempt over-editing without requiring credentials, network side effects, deployment, or destructive operations.
-
-Good messy surfaces include:
-
-- Search plus indexing plus UI display.
-- Blog/content metadata plus pages plus generated JSON.
-- Command registration plus help text plus service handler.
-- Route metadata plus sitemap/feed implications.
-- Generated files that should not be touched.
 
 ### 4. Create experiment conditions
 
 Create two equivalent local copies:
 
-- `baseline`: no `AGENTS.md`, or existing `AGENTS.md` removed from the agent-visible path.
+- `baseline`: no candidate `AGENTS.md`, or existing `AGENTS.md` removed from the agent-visible path.
 - `treatment`: same starting point with the candidate `AGENTS.md`.
 
-Use the same starting commit or file snapshot. Initialize local git repositories inside the copies so diffs can be measured cleanly.
+Prefer creating benchmark copies from git-tracked files or a clean clone/archive. Avoid copying dependency folders, build output, caches, `.git` history, and ignored files unless they are required for the trial.
+
+Use the same starting commit or file snapshot for both conditions. Initialize fresh local git repositories inside the copies so diffs can be measured cleanly.
 
 Do not run trials in the user's source repository.
 
 ### 5. Run trials
 
-For each task:
-
-- Use the same agent.
-- Use the same prompt.
-- Use the same starting state.
-- Use the same timeout.
-- Collect the same metrics.
+For each task, use the same agent, prompt, starting state, timeout, and collection method for both conditions.
 
 Prefer at least five runs per condition. If only one run is possible, label the result as a signal, not proof.
 
 ### 6. Collect metrics
 
+Use `references/report-template.md` for the final report structure.
+
 Collect:
 
-- Files changed.
+- Changed files, including both tracked and untracked files.
 - Diff size.
 - Commands run.
 - Validation result.
 - Protected files touched.
-- Generated files touched.
+- Generated or ignored files touched.
 - Whether the agent stayed scoped.
 - Whether the agent wandered into unrelated surfaces.
 - Whether the agent ran unnecessary commands.
 - Whether the agent missed expected files.
 - Token, cost, credit, or wall-time metrics when available.
 
+Always include untracked files in changed-file counts and reports. Use both `git diff --name-only` and `git ls-files --others --exclude-standard`.
+
+If validation commands cannot run because tooling is unavailable in the agent environment, record that as an environment limitation. Do not treat it as a code failure. Run lightweight checks such as `git diff --check` when available.
+
 ### 7. Analyze honestly
 
 Use medians when multiple runs exist.
 
-Report:
-
-- Positive signals.
-- Neutral results.
-- Negative results.
-- Inconclusive results.
-- Outliers and tail behavior.
-
-Do not claim AGENTS.md helped if both conditions behaved the same. Neutral results are useful.
+Report positive signals, neutral results, negative results, inconclusive results, and outliers. Do not claim `AGENTS.md` helped if both conditions behaved the same.
 
 ### 8. Produce outputs
 
@@ -159,108 +110,14 @@ Default to private outputs:
 - Benchmark prompts.
 - Internal report.
 - Results table.
-- Recommended AGENTS.md changes.
+- Recommended `AGENTS.md` changes.
 
-For public outputs, sanitize aggressively and summarize behavior without exposing private code or repository details.
-
-## AGENTS.md starter
-
-Use this as a starting point, then adapt it to the repository:
-
-```markdown
-# Repository instructions for coding agents
-
-- Use <package-manager> for dependency management. Do not switch package managers.
-- Install dependencies with `<install-command>` when needed.
-- Run `<lint-command>` after source changes.
-- Run `<test-command>` after behavior changes.
-- Run `<build-command>` after routing, content, config, or generated-data changes.
-- Keep changes scoped to the requested task. Do not refactor unrelated code.
-- Do not edit generated files such as `<generated-paths>`.
-- Do not modify protected configuration files such as `<protected-files>` unless explicitly asked.
-- Follow existing patterns in `<important-paths>` before adding new helpers or conventions.
-- If a task crosses multiple surfaces, keep related UI, service, and generated metadata behavior consistent.
-```
-
-## Benchmark prompt patterns
-
-### Simple scoped task
-
-```text
-Add a small feature that follows an obvious existing pattern. Keep the change scoped and run the appropriate validation.
-```
-
-Expected result: often neutral. Both baseline and treatment may perform well.
-
-### Multi-file task
-
-```text
-Wire a small behavior across the existing UI and service layers. Keep existing behavior and styling otherwise.
-```
-
-Expected result: may reveal missed files, unnecessary styling changes, or inconsistent metadata updates.
-
-### Messy cross-surface task
-
-```text
-Add a small content-derived feature that appears in list pages, detail pages, and search results. Calculate it from source content. Keep draft filtering intact. Do not change feeds, routing, deployment config, generated output, or unrelated layout/styling.
-```
-
-Expected result: best chance to reveal scope control differences.
-
-## Report template
-
-Use this structure:
-
-```markdown
-# AGENTS.md Benchmark Report
-
-## Setup
-
-- Repository: <sanitized name>
-- Agent/tool: <agent>
-- Runs per condition: <n>
-- Task: <task summary>
-
-## Result summary
-
-| Condition | Files changed | Diff size | Validation | Protected files touched | Scope notes |
-|---|---:|---:|---|---|---|
-| Baseline | <n> | <size> | <result> | <yes/no> | <notes> |
-| Treatment | <n> | <size> | <result> | <yes/no> | <notes> |
-
-## Findings
-
-- <finding>
-- <finding>
-
-## Recommended AGENTS.md changes
-
-- <change>
-- <change>
-
-## Limits
-
-- <limit>
-```
+For public outputs, summarize behavior and metrics without exposing private code, repository names, raw diffs, local paths, or transcripts.
 
 ## Decision guidance
 
-Recommend adopting or revising `AGENTS.md` when it reduces:
+Recommend adopting or revising `AGENTS.md` when it reduces wandering, over-editing, unnecessary commands, protected-file touches, missed validation commands, convention mismatches, or inconsistent multi-file updates.
 
-- Wandering.
-- Over-editing.
-- Unnecessary commands.
-- Protected-file touches.
-- Missed validation commands.
-- Convention mismatches.
-- Inconsistent multi-file updates.
-
-Recommend more trials when:
-
-- Only one run exists.
-- Both conditions behave similarly.
-- The task was too easy.
-- The result depends on an ambiguous interpretation.
+Recommend more trials when only one run exists, both conditions behave similarly, the task was too easy, or the result depends on an ambiguous interpretation.
 
 Never claim enforcement. `AGENTS.md` is guidance. CI, tests, branch protection, and sandboxing enforce.

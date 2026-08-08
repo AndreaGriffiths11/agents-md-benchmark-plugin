@@ -2,6 +2,8 @@
 
 Use these as starting points. Replace placeholders with repo-specific details before running trials. Do not publish filled-in prompts from private repositories unless sanitized.
 
+Before running prompts, create matched baseline and treatment copies from the same clean snapshot. Prefer git-tracked files or a clean clone/archive so dependency folders, build output, caches, `.git` history, and ignored files do not distort setup time or diffs.
+
 ## Simple scoped task
 
 ```text
@@ -42,3 +44,16 @@ Purpose: tests whether instructions prevent unnecessary protected-file touches.
 
 Expected signal: protected-file touches, unrequested validation/build churn, or source edits when docs were enough.
 
+## Trial execution prompt wrapper
+
+Use the same wrapper for each condition, changing only the repository path and whether `AGENTS.md` is present:
+
+```text
+You are running a private local benchmark trial in the repository copy at <repo-copy-path>. Do not publish, push, commit, message anyone, or touch any path outside this repository copy.
+
+Task: <benchmark-task>
+
+Make only the changes needed for that behavior. Use existing repo patterns. Run the appropriate validation command if available. If validation tooling is unavailable in this environment, record that as an environment limitation and run `git diff --check` if possible.
+
+At the end, report: files changed, including untracked files; commands run; whether validation passed, failed, or was unavailable; protected files touched; generated or ignored files touched; and any notable scope behavior.
+```
