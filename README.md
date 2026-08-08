@@ -68,28 +68,17 @@ The skill will guide the agent to:
 | `skills/agents-md-benchmark/references/report-template.md` | Report structure for private/internal results |
 | `skills/agents-md-benchmark/references/sanitized-summary.md` | Public-safe example summary pattern |
 
-## Privacy and sanitization
+## Example data
 
-Do not publish raw benchmark artifacts from private repositories.
+The included examples are intentionally generic. They show the shape of a benchmark report without using real repository names, private paths, raw diffs, or source code.
 
-Before anything from an experiment lands in this repository or a public skills catalog, remove:
-
-- Private repository names, owners, paths, domains, and organization names.
-- Source code copied from private repositories.
-- Raw diffs from private repositories.
-- Agent transcripts that include private code or local paths.
-- Secrets, tokens, credentials, logs, emails, chats, calendar data, or customer data.
-- Full benchmark transcripts unless they were produced against a public demo repository.
-
-Use generic labels such as `sample-web-app`, `baseline`, `treatment`, `protected config`, and `generated output`.
+When you run the skill on your own repo, keep detailed benchmark artifacts local unless you choose to share them. For reusable examples, describe the behavior and metrics without exposing project-specific details.
 
 ## More skills
 
 This repository is the shareable Agent Plugin package for the skill.
 
 For more skills by me, visit `mainbranch.dev/skills/`.
-
-Examples in this repository are sanitized so the workflow can be reused without exposing private benchmark details.
 
 ## License
 
