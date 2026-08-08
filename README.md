@@ -83,13 +83,13 @@ Before anything from an experiment lands in this repository or a public skills c
 
 Use generic labels such as `sample-web-app`, `baseline`, `treatment`, `protected config`, and `generated output`.
 
-## Next steps
+## More skills
 
-This repository is where the skill is developed first.
+This repository is the shareable Agent Plugin package for the skill.
 
-When the skill is ready to share more broadly, add it to `mainbranch.dev/skills/` as a public skill page. That page can summarize the skill and point back to this plugin repo once the repo is ready to be public.
+For more skills by me, visit `mainbranch.dev/skills/`.
 
-Keep private benchmark artifacts out of both places. Only publish sanitized examples, templates, and documentation.
+Keep private benchmark artifacts out of shared materials. Only share sanitized examples, templates, and documentation.
 
 ## License
 
