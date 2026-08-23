@@ -1,0 +1,8 @@
+body {
+  color: #1f2328;
+  font-family: system-ui, sans-serif;
+}
+
+.profile-card {
+  max-width: 420px;
+}

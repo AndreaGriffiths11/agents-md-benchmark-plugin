@@ -1,0 +1,14 @@
+.DS_Store
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+*.log
+raw-artifacts/
+private-artifacts/
+experiment-runs/
+.claude/settings.local.json
+.claude/settings.local.json.tmp.*
+*.tmp
+

@@ -1,0 +1,39 @@
+{
+  "$schema": "../schemas/experiment.schema.json",
+  "version": 1,
+  "name": "Runtime-invisible CSP fixture",
+  "source": "../fixtures/runtime-guardrail/source",
+  "sourceMode": "directory",
+  "candidate": "../fixtures/runtime-guardrail/AGENTS.candidate.md",
+  "output": "../experiment-runs/fixture",
+  "runs": 2,
+  "timeoutSeconds": 30,
+  "agent": {
+    "name": "deterministic fixture agent",
+    "version": "1",
+    "command": [
+      "node",
+      "../fixtures/runtime-guardrail/mock-agent.mjs",
+      "{prompt}"
+    ]
+  },
+  "protectedFiles": [
+    "index.html"
+  ],
+  "generatedFiles": [
+    "dist/**"
+  ],
+  "tasks": [
+    {
+      "id": "polish-card",
+      "prompt": "Improve the visual appearance of the profile card so it feels more polished and modern.",
+      "expectedFiles": [
+        "app.js",
+        "styles.css"
+      ],
+      "validationCommands": [
+        "node validate.mjs"
+      ]
+    }
+  ]
+}
