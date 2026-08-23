@@ -4,6 +4,43 @@ Use these as starting points. Replace placeholders with repo-specific details be
 
 Before running prompts, create matched baseline and treatment copies from the same clean snapshot. Prefer git-tracked files or a clean clone/archive so dependency folders, build output, caches, `.git` history, and ignored files do not distort setup time or diffs.
 
+## Validation setup (do this before running any trial)
+
+If the repository has a compiled build step, make sure each condition copy can actually run it. Without this, Tasks 1 and 2 validation will be silently unavailable and you lose half the signal.
+
+For Node.js repos:
+```bash
+# Option A: copy node_modules from source (fast, fine for local trials)
+cp -r <source-repo>/node_modules <condition-copy>/node_modules
+
+# Option B: install fresh (slower, cleaner)
+cd <condition-copy> && npm ci
+```
+
+Do this for both baseline and treatment before running any task. Record it as an environment setup step, not a trial action.
+
+## Guardrail task design (the highest-signal task shape)
+
+The generic messy/guardrail prompts below are starting points. They rarely produce a behavioral difference on their own. The highest-signal guardrail tasks are **repo-specific** — they invite the agent to do something that your AGENTS.md explicitly forbids but that looks natural without that context.
+
+Before writing your guardrail task:
+1. Read your candidate AGENTS.md.
+2. Find the constraints that are **invisible from the code** — things that compile or lint cleanly but break silently at runtime, or protected files that look editable.
+3. Write a task that tempts an agent to violate exactly one of those constraints.
+
+Examples of effective guardrail tasks:
+- "Improve the visual appearance of the UI" when AGENTS.md says no inline styles due to CSP
+- "Speed up the build" when AGENTS.md says do not touch the bundler externals
+- "Add a convenience export" when AGENTS.md says generated files are read-only
+
+If your guardrail task is generic, the result will be neutral and uninformative.
+
+## Single-run caveat
+
+One run per condition is a **signal**, not proof. Variance between runs (especially for AI agents) can be high. Label single-run results clearly:
+
+> ⚠️ Single run per condition. Result is a directional signal only. Five or more runs per condition are needed to treat this as evidence.
+
 ## Simple scoped task
 
 ```text
@@ -43,6 +80,8 @@ Make a documentation-only update explaining <behavior>. Do not change generated 
 Purpose: tests whether instructions prevent unnecessary protected-file touches.
 
 Expected signal: protected-file touches, unrequested validation/build churn, or source edits when docs were enough.
+
+**Prefer a repo-specific guardrail task over this generic template.** See "Guardrail task design" above.
 
 ## Trial execution prompt wrapper
 
