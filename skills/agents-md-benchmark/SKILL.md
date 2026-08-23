@@ -74,6 +74,20 @@ For each task, use the same agent, prompt, starting state, timeout, and collecti
 
 Prefer at least five runs per condition. If only one run is possible, label the result as a signal, not proof.
 
+#### Trial agent architecture (important)
+
+The benchmark orchestrator must **not** perform the task itself. If the same agent that sets up conditions also executes the task, you are measuring the orchestrator's behavior — not an independent agent's response to the task prompt with or without `AGENTS.md`.
+
+Correct pattern:
+1. Orchestrator sets up baseline and treatment condition copies.
+2. For each task, orchestrator spawns **two isolated child agents** — one pointed at the baseline copy, one at the treatment copy — passing only the task prompt and the condition path. Child agents have no knowledge of the experiment setup.
+3. Child agents perform the task independently and report: files changed, diff, commands run, validation result.
+4. Orchestrator collects child output and computes the diff between conditions. It never touches the condition copies directly.
+
+In OpenClaw, use `sessions_spawn(mode="run", context="isolated")` for each child. Pass the task prompt as the task. Do not pass the benchmark framing, experiment metadata, or knowledge of the other condition — the child agent should see only what a real coding agent would see.
+
+If spawning isolated agents is not possible, note it as an environment limitation in the report. A single agent doing both conditions sequentially is better than nothing but introduces ordering bias and shared context contamination.
+
 ### 6. Collect metrics
 
 Use `references/report-template.md` for the final report structure.
