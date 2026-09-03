@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/AndreaGriffiths11/agents-md-benchmark-plugin/schemas/results.schema.json",
+  "$id": "https://raw.githubusercontent.com/AndreaGriffiths11/agents-md-benchmark-plugin/main/schemas/results.schema.json",
   "title": "AGENTS.md benchmark results",
   "type": "object",
   "required": ["schemaVersion", "experiment", "configuration", "trials"],

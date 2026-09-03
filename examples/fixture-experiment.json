@@ -7,7 +7,6 @@
   "candidate": "../fixtures/runtime-guardrail/AGENTS.candidate.md",
   "output": "../experiment-runs/fixture",
   "runs": 2,
-  "_runs_note": "Set to 2 for a fast demo (< 1s). For real experiments use 5+ runs per condition — fewer than 5 is labeled 'directional signal only' in the summary.",
   "timeoutSeconds": 30,
   "agent": {
     "name": "deterministic fixture agent",

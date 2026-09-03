@@ -8,10 +8,7 @@
     "name": "Andrea Griffiths"
   },
   "homepage": "https://github.com/AndreaGriffiths11/agents-md-benchmark-plugin",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/AndreaGriffiths11/agents-md-benchmark-plugin.git"
-  },
+  "repository": "https://github.com/AndreaGriffiths11/agents-md-benchmark-plugin.git",
   "keywords": [
     "agents-md",
     "benchmark",

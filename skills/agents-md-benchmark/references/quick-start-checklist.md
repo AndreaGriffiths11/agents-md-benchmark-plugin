@@ -33,7 +33,7 @@ If the repository runner is available, start from `examples/fixture-experiment.j
 - [ ] Added 1-2 repo-specific patterns
 - [ ] Validated: fits on 1 page
 - [ ] Validated: no vague guidance, no duplicated README content
-- [ ] Saved to: `/tmp/agents-md-candidate.md`
+- [ ] Saved to: `<local-temp-dir>/agents-md-candidate.md`
 
 ## Phase 3: Design benchmark tasks (30 min)
 
@@ -63,13 +63,13 @@ If the repository runner is available, start from `examples/fixture-experiment.j
 - [ ] Trial matrix reviewed: `node ./bin/agents-md-benchmark.mjs plan <manifest>`
 
 **Baseline setup**
-- [ ] Created `/tmp/benchmark-baseline`
+- [ ] Created `<local-temp-dir>/benchmark-baseline`
 - [ ] Removed `AGENTS.md`
 - [ ] Git initialized: `git init && git add . && git commit -m "baseline"`
 - [ ] Verified no `AGENTS.md` visible
 
 **Treatment setup**
-- [ ] Created `/tmp/benchmark-treatment`
+- [ ] Created `<local-temp-dir>/benchmark-treatment`
 - [ ] Created `AGENTS.md` with candidate
 - [ ] Git initialized: `git init && git add . && git commit -m "treatment"`
 - [ ] Verified `AGENTS.md` visible
