@@ -25,6 +25,25 @@ The plugin reports neutral and inconclusive results honestly. It should not clai
 
 This plugin turns that measurement workflow into a reusable skill.
 
+## Architecture
+
+The skill layer does the thinking (inspect the repo, draft the candidate, design tasks, interpret results). The runner does the measuring. For every task, run, and condition it makes a fresh copy of the source repo, spawns the configured agent as a separate process, and turns the resulting Git diff into metrics.
+
+```mermaid
+flowchart LR
+    I["<b>Inputs</b><br/>experiment.json<br/>source repo<br/>AGENTS.candidate.md"]
+    P["<b>Prepare</b><br/>fresh copy per trial<br/>a/ no AGENTS.md<br/>b/ candidate AGENTS.md"]
+    E["<b>Execute</b><br/>spawn coding agent in trial dir<br/>Copilot CLI · Claude Code · mock"]
+    V["<b>Validate</b><br/>run validationCommands"]
+    X["<b>Measure</b><br/>git diff → expected<br/>unexpected · protected"]
+    Y["<b>Summarize</b><br/>medians · pass rates<br/>confidence label"]
+    O["<b>Outputs</b><br/>results.json<br/>summary.md<br/>logs/"]
+
+    I --> P --> E --> V --> X --> Y --> O
+```
+
+The Prepare → Measure loop repeats for each task × run × condition. `a/` is the baseline (no `AGENTS.md`), `b/` is the treatment (candidate `AGENTS.md`). Everything lands under `experiment-runs/<name>/`.
+
 ## Package layout
 
 ```text
