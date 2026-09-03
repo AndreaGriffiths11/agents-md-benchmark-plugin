@@ -1,0 +1,16 @@
+{
+  "name": "agents-md-benchmark-plugin",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "agents-md-benchmark": "./bin/agents-md-benchmark.mjs"
+  },
+  "scripts": {
+    "benchmark:fixture": "node ./bin/agents-md-benchmark.mjs run ./examples/fixture-experiment.json",
+    "check": "node ./scripts/check.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

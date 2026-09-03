@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/AndreaGriffiths11/agents-md-benchmark-plugin/schemas/results.schema.json",
+  "title": "AGENTS.md benchmark results",
+  "type": "object",
+  "required": ["schemaVersion", "experiment", "configuration", "trials"],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "experiment": {
+      "type": "object",
+      "required": [
+        "name",
+        "sourceMode",
+        "runsPerCondition",
+        "startedAt",
+        "completedAt"
+      ]
+    },
+    "configuration": {
+      "type": "object",
+      "required": ["agent", "protectedFiles", "generatedFiles", "timeoutSeconds"]
+    },
+    "trials": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["taskId", "run", "condition", "agent", "validations", "metrics"],
+        "properties": {
+          "condition": {
+            "enum": ["baseline", "treatment"]
+          },
+          "agent": {
+            "type": "object",
+            "required": ["status", "durationMs", "log"]
+          },
+          "metrics": {
+            "type": "object",
+            "required": [
+              "changedFiles",
+              "changedFileCount",
+              "insertions",
+              "deletions",
+              "diffLines",
+              "protectedFilesTouched",
+              "generatedFilesTouched",
+              "unexpectedFilesTouched",
+              "diffCheckPassed"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

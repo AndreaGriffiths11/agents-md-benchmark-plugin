@@ -1,0 +1,22 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "agents-md-benchmark",
+  "version": "0.2.0",
+  "description": "Design and run reproducible before/after experiments that measure whether AGENTS.md changes coding-agent behavior.",
+  "license": "MIT",
+  "author": {
+    "name": "Andrea Griffiths"
+  },
+  "homepage": "https://github.com/AndreaGriffiths11/agents-md-benchmark-plugin",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AndreaGriffiths11/agents-md-benchmark-plugin.git"
+  },
+  "keywords": [
+    "agents-md",
+    "benchmark",
+    "agent-skills",
+    "aaif",
+    "developer-tools"
+  ]
+}

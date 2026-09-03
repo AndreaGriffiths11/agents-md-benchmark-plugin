@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/AndreaGriffiths11/agents-md-benchmark-plugin/schemas/experiment.schema.json",
+  "title": "AGENTS.md benchmark experiment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "name", "source", "candidate", "output", "agent", "tasks"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "version": {
+      "const": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceMode": {
+      "enum": ["git", "directory"],
+      "default": "git"
+    },
+    "candidate": {
+      "type": "string",
+      "minLength": 1
+    },
+    "output": {
+      "type": "string",
+      "minLength": 1
+    },
+    "runs": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 1
+    },
+    "timeoutSeconds": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 900
+    },
+    "agent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "command": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "validationCommands": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "protectedFiles": {
+      "$ref": "#/$defs/patterns"
+    },
+    "generatedFiles": {
+      "$ref": "#/$defs/patterns"
+    },
+    "tasks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/task"
+      }
+    }
+  },
+  "$defs": {
+    "patterns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "prompt"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "prompt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expectedFiles": {
+          "$ref": "#/$defs/patterns"
+        },
+        "protectedFiles": {
+          "$ref": "#/$defs/patterns"
+        },
+        "generatedFiles": {
+          "$ref": "#/$defs/patterns"
+        },
+        "validationCommands": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
